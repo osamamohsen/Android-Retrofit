@@ -1,4 +1,4 @@
-###1-	Add permission of internet in manifest
+### 1-	Add permission of internet in manifest
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
 ###2-	Add in your build gradle
