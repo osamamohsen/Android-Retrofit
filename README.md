@@ -67,10 +67,6 @@ package com.example.osama.retrofit.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by osama on 10/26/2017.
- */
-
 public class Contact {
 
 // @SerializedName: Name variables refere to column name in table contacts in Database, if coulmn name is Name doesnt nessessary to make Serialization
