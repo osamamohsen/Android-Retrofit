@@ -1,7 +1,7 @@
 ### 1-	Add permission of internet in manifest
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
-###2-	Add in your build gradle
+### 2-	Add in your build gradle
 	
 	compile 'com.squareup.retrofit2:retrofit:2.3.0'
 	compile 'com.squareup.retrofit2:converter-gson:2.3.0'
@@ -10,7 +10,7 @@
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.squareup.picasso:picasso:2.5.2' // add Picasso
 
-###3-	Add Recycle View Xml
+### 3-	Add Recycle View Xml
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -28,7 +28,7 @@
 
 </RelativeLayout>
 
-###4-	Add card View Xml
+### 4-	Add card View Xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -61,7 +61,7 @@
     
 </LinearLayout>
 
-###5-	Add Contact Model
+### 5-	Add Contact Model
 
 package com.example.osama.retrofit.Model;
 
@@ -92,7 +92,7 @@ public class Contact {
 
 
 
-###6-	Add Client API
+### 6-	Add Client API
 	public class ApiClient {
     private static final String BASE_URL = "http://192.168.1.106:8000/contact/index";
     public static Retrofit retrofit= null;
@@ -105,7 +105,7 @@ public class Contact {
     }
 }
 
-###7-	Now time to make an Interface for responsible to call api
+### 7-	Now time to make an Interface for responsible to call api
 public interface ApiInterface {
 
     @POST("index")
@@ -113,7 +113,7 @@ public interface ApiInterface {
 }
 
 
-###8-	Create ViewHolder
+### 8-	Create ViewHolder
 
 public class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -128,7 +128,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
 }
 
 
-###9-	Create RecycleAdapter
+### 9-	Create RecycleAdapter
 public class RecycleAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private List<Contact> contacts;
@@ -156,7 +156,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
 }
 
-###10-	Go To Main Activity
+### 10-	Go To Main Activity
 private RecyclerView recyclerView;
 private RecyclerView.LayoutManager layoutManager;
 private RecycleAdapter adapter;
