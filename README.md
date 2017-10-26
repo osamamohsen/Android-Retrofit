@@ -73,7 +73,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Contact {
 
-/*name: column name is database that mean if variable name is name doesn’t necessary to make serialize*/
+// @SerializedName: Name variables refere to column name in table contacts in Database, if coulmn name is Name doesnt nessessary to make Serialization
 
     @SerializedName("name") 
     private String Name;
@@ -94,7 +94,8 @@ public class Contact {
 
 ### 6-	Add Client API
 	public class ApiClient {
-    private static final String BASE_URL = "http://192.168.1.106:8000/contact/index";
+	//laraTest: service api which exist in route project
+    private static final String BASE_URL = "http://192.168.1.106/Mobile/laraTest/";
     public static Retrofit retrofit= null;
     public static Retrofit getApiClient() {
         if(retrofit == null){
@@ -108,7 +109,7 @@ public class Contact {
 ### 7-	Now time to make an Interface for responsible to call api
 public interface ApiInterface {
 
-    @POST("index")
+    @GET("index")
     Call<List<Contact>> getContacts();
 }
 
