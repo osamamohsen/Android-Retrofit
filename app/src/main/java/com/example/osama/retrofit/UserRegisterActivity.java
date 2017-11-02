@@ -12,6 +12,8 @@ import com.example.osama.retrofit.User.User;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import info.hoang8f.widget.FButton;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,9 +46,16 @@ public class UserRegisterActivity extends AppCompatActivity {
     }
 
     private void sendNetworkRequest(User user) {
+
+        OkHttpClient.Builder okhttpClinetBuilder = new OkHttpClient.Builder();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okhttpClinetBuilder.addInterceptor(logging);
+
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Common.SERVER_URL)
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpClinetBuilder.build());
 
         Retrofit retrofit = builder.build();
         ClientInterface client = retrofit.create(ClientInterface.class);
