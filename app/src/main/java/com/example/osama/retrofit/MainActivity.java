@@ -1,5 +1,6 @@
 package com.example.osama.retrofit;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(MainActivity.this,GithubActivity.class);
+        startActivity(intent);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycleView);
         layoutManager = new LinearLayoutManager(this);
