@@ -3,6 +3,8 @@
     package="com.example.osama.retrofit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -19,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".GithubActivity" />
-        <activity android:name=".UserRegisterActivity"></activity>
+        <activity android:name=".UserRegisterActivity" />
+        <activity android:name=".UploadActivity"></activity>
     </application>
 
 </manifest>

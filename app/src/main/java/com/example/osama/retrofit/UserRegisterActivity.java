@@ -1,5 +1,6 @@
 package com.example.osama.retrofit;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserRegisterActivity extends AppCompatActivity {
 
     MaterialEditText edtRegisterEmail,edtRegisterPassword,edtRegisterName;
-    FButton btnRegister;
+    FButton btnRegister,btnRegisterNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,14 @@ public class UserRegisterActivity extends AppCompatActivity {
         edtRegisterEmail = (MaterialEditText) findViewById(R.id.edtRegisterEmail);
         edtRegisterPassword = (MaterialEditText) findViewById(R.id.edtRegisterPassword);
         btnRegister = (FButton) findViewById(R.id.btnRegister);
+        btnRegisterNext = (FButton) findViewById(R.id.btnRegisterNext);
+        btnRegisterNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserRegisterActivity.this,UploadActivity.class);
+                startActivity(intent);
+            }
+        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
