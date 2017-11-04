@@ -1,5 +1,6 @@
 package com.example.osama.retrofit.User;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -44,5 +45,13 @@ public interface ClientInterface {
             @PartMap Map<String,RequestBody> data,
             @Part MultipartBody.Part photo
     );
+
+    @Multipart
+    @POST("upload")
+    Call<ResponseBody> uploadAlbum(
+            @PartMap Map<String,RequestBody> data,
+            @Part List<MultipartBody.Part> photo
+    );
+
 
 }

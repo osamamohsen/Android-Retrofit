@@ -59,9 +59,8 @@ public class Image {
     public static void chooseFile(final Activity activity){
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
-////        galleryIntent.setType("file/*");
-//        galleryIntent.setType("*/*");
-        activity.startActivityForResult(galleryIntent,PICK_FILE_STORAGE);
+        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        activity.startActivityForResult(galleryIntent.createChooser(galleryIntent,"Select Picture"), PICK_FILE_STORAGE);
     }
 
     public static Uri bitmapToUriConverter(final Activity activity , Bitmap mBitmap) {

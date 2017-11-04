@@ -2,6 +2,7 @@ package com.example.osama.retrofit;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -22,6 +23,8 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import info.hoang8f.widget.FButton;
 import okhttp3.MediaType;
@@ -38,6 +41,7 @@ public class UploadActivity extends AppCompatActivity {
     FButton btnUploadImage,btnSubmit;
     MaterialEditText edtUploadDescription;
     Uri selectedImage = null,selectedFile = null;
+    ArrayList<Uri> fileUris;
 
     String mediaPath;
     ProgressDialog progressDialog;
@@ -71,13 +75,17 @@ public class UploadActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(selectedImage != null || selectedFile != null){
+                if(selectedImage != null || !fileUris.isEmpty()){
                     if(PermissionStorage.IsEnable(UploadActivity.this))
-                        uploadFile(selectedImage);
+//                        uploadFile(selectedImage);
+                        uploadFile(fileUris);
+//                        Toast.makeText(UploadActivity.this, ""+fileUris.size(), Toast.LENGTH_SHORT).show();
                     else{
                         PermissionStorage.EnableStorage(UploadActivity.this);
                         if(PermissionStorage.IsEnable(UploadActivity.this))
-                            uploadFile(selectedImage);
+//                            uploadFile(selectedImage);
+                            uploadFile(fileUris);
+//                            Toast.makeText(UploadActivity.this, ""+fileUris.size(), Toast.LENGTH_SHORT).show();
                     }
                 }else
                     Toast.makeText(UploadActivity.this, "Image is required", Toast.LENGTH_SHORT).show();
@@ -102,7 +110,7 @@ public class UploadActivity extends AppCompatActivity {
         return MultipartBody.Part.createFormData(fileName,Original_file.getName(),filePart);
     }
 
-    public void uploadFile(Uri fileUri){
+    public void uploadFile(ArrayList<Uri> listUri){
 
         progressDialog.show();
 
@@ -111,12 +119,17 @@ public class UploadActivity extends AppCompatActivity {
         ClientInterface client = retrofitBuilder.getRetrofit().create(ClientInterface.class);
 
         retrofitBuilder.pushMap("description",edtUploadDescription.getText().toString());
-        retrofitBuilder.pushMap("name","name"+edtUploadDescription.getText().toString());
-        retrofitBuilder.pushMap("country","");
+        retrofitBuilder.pushMap("count",String.valueOf(listUri.size()).toString());
 
-        Call<ResponseBody> call = client.uploadPhoto(
+        List<MultipartBody.Part> filesUri = new ArrayList<>();
+        for(int i =0; i< listUri.size() ; i++){
+            filesUri.add(retrofitBuilder.prepareFilePart("file"+i,listUri.get(i)));
+        }
+
+
+        Call<ResponseBody> call = client.uploadAlbum(
                 retrofitBuilder.getMap(),
-                retrofitBuilder.prepareFilePart("file",fileUri)
+                filesUri
             );
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -142,8 +155,19 @@ public class UploadActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode == Image.PICK_IMAGE_GALLERY || requestCode == Image.PICK_FILE_STORAGE) &&
-                resultCode == RESULT_OK && data != null && data.getData() != null){
+                resultCode == RESULT_OK && data != null &&( data.getData() != null || data.getClipData() != null )){
             selectedImage = data.getData();
+            ClipData clipData = data.getClipData();
+            fileUris = new ArrayList<Uri>();
+            if(selectedImage != null){
+                fileUris.add(selectedImage);
+            }else{
+                for (int i=0; i<clipData.getItemCount(); i++){
+                    ClipData.Item item = clipData.getItemAt(i);
+                    Uri uri = item.getUri();
+                    fileUris.add(uri);
+                }
+            }
             btnUploadImage.setText("Image Selected From Gallery");
         }//end if
         else if(requestCode == Image.PICK_IMAGE_CAMERA && resultCode == Activity.RESULT_OK){
